@@ -1,0 +1,35 @@
+{
+	"info": {
+		"_postman_id": "6c60ade5-4d0e-4205-92aa-ce8d3186aa42",
+		"name": "Nasa App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Asteroids",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/nasa-app/asteroids?planet=earth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nasa-app",
+						"asteroids"
+					],
+					"query": [
+						{
+							"key": "planet",
+							"value": "earth"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
