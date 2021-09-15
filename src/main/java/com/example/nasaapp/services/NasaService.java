@@ -8,10 +8,8 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class NasaService {
@@ -22,25 +20,38 @@ public class NasaService {
     public List<AsteroidResponse> getAsteroids(String param) {
 
         List<AsteroidResponse> asteroidList = new ArrayList<AsteroidResponse>();
-        Asteroid asteroid = nasaProvider.getAsteroidByPlanet();
 
-        if (asteroid == null) {
+        // Calculate the Dates
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String startDate = format.format(now);
+
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(now);
+        cal.add(Calendar.DATE, 7);
+        String endDate = format.format(cal.getTime());
+
+        // Call the external api to get the info
+        Asteroid asteroids = this.nasaProvider.getAsteroids(startDate, endDate);
+
+        if (asteroids == null) {
             return null;
         } else {
 
-            for (Map.Entry<String, Object> obj : asteroid.getNearEarthObjects().entrySet()) {
+            for (Map.Entry<String, Object> obj : asteroids.getNearEarthObjects().entrySet()) {
 
                 List<Map<String, Object>> list = (List<Map<String, Object>>) obj.getValue();
                 for (Map<String, Object> item : list) {
 
-                    boolean is_potentially_hazardous_asteroid = BooleanUtils.toBoolean(item.get("is_potentially_hazardous_asteroid").toString());
+                    boolean isPotentiallyHazardousAsteroid = BooleanUtils.toBoolean(item.get("is_potentially_hazardous_asteroid").toString());
                     String name = null;
                     double diameterMedium = 0.0;
                     String velocity = null;
                     String date = null;
                     String planet = null;
 
-                    if (is_potentially_hazardous_asteroid) {
+                    if (isPotentiallyHazardousAsteroid) {
 
                         List<Map<String, Object>> otherDatas = (List<Map<String, Object>>) item.get("close_approach_data");
                         for (Map<String, Object> data : otherDatas) {

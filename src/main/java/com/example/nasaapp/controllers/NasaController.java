@@ -1,9 +1,11 @@
 package com.example.nasaapp.controllers;
 
 import com.example.nasaapp.models.responses.AsteroidResponse;
+import com.example.nasaapp.models.responses.ErrorResponse;
 import com.example.nasaapp.services.NasaService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +22,21 @@ public class NasaController {
     private NasaService nasaService;
 
     @GetMapping(value = "/asteroids", produces = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<String> getAsteroids(@RequestParam(required = false, name = "planet") String planet) {
+    private ResponseEntity getAsteroids(@RequestParam(required = false, name = "planet") String planet) {
 
         ResponseEntity responseEntity;
 
         try {
 
             if (StringUtils.isEmpty(planet)) {
-                // Always indicated the requestParams with required false to controlate the error and send my own message.
+                // Always indicated the requestParams with required false to control
+                // the error and send my own message.
                 responseEntity = ResponseEntity
                         .badRequest()
-                        .body("The planet param is mandatory.");
+                        .body(new ErrorResponse(HttpStatus.SC_BAD_REQUEST, "The planet param is mandatory."));
             } else {
 
-                List<AsteroidResponse> response = nasaService.getAsteroids(planet);
+                List<AsteroidResponse> response = this.nasaService.getAsteroids(planet);
 
                 // Return with empty body because planet does not match with datas.
                 responseEntity = CollectionUtils.isEmpty(response)
@@ -43,7 +46,9 @@ public class NasaController {
 
         } catch (Exception e) {
             // print a log message
-            responseEntity = ResponseEntity.internalServerError().build();
+            responseEntity = ResponseEntity
+                    .internalServerError()
+                    .body(new ErrorResponse(HttpStatus.SC_INTERNAL_SERVER_ERROR, "An error occurred while trying to get the asteroids."));
         }
 
         return responseEntity;

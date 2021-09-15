@@ -1,28 +1,23 @@
 package com.example.nasaapp.providers;
 
 import com.example.nasaapp.models.responses.Asteroid;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.connector.Response;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URISyntaxException;
-import java.util.Map;
-
 @Service
 public class NasaProvider {
 
-    public Asteroid getAsteroidByPlanet() {
+    public Asteroid getAsteroids(String startDate, String endDate) {
 
         try {
 
             URIBuilder uriBuilder = new URIBuilder("https://api.nasa.gov/neo/rest/v1/feed");
-            uriBuilder.addParameter("start_date", "2020-09-09");
-            uriBuilder.addParameter("end_date", "2020-09-16");
+            uriBuilder.addParameter("start_date", startDate);
+            uriBuilder.addParameter("end_date", endDate);
             uriBuilder.addParameter("api_key", "hOMBln4aaqylauUuMn2g5cD5heGAqsAasf43LZwr");
 
             RestTemplate restTemplate = new RestTemplate();
@@ -38,7 +33,5 @@ public class NasaProvider {
             // Print a log message
             return null;
         }
-
     }
-
 }
