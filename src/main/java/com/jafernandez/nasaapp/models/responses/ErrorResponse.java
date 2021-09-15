@@ -1,4 +1,4 @@
-package com.example.nasaapp.models.responses;
+package com.jafernandez.nasaapp.models.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

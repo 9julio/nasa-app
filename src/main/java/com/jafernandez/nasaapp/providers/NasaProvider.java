@@ -1,6 +1,6 @@
-package com.example.nasaapp.providers;
+package com.jafernandez.nasaapp.providers;
 
-import com.example.nasaapp.models.responses.Asteroid;
+import com.jafernandez.nasaapp.models.responses.Asteroid;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;

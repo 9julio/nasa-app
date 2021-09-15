@@ -1,8 +1,8 @@
-package com.example.nasaapp.services;
+package com.jafernandez.nasaapp.services;
 
-import com.example.nasaapp.models.responses.Asteroid;
-import com.example.nasaapp.models.responses.AsteroidResponse;
-import com.example.nasaapp.providers.NasaProvider;
+import com.jafernandez.nasaapp.models.responses.Asteroid;
+import com.jafernandez.nasaapp.models.responses.AsteroidResponse;
+import com.jafernandez.nasaapp.providers.NasaProvider;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class NasaService {
             asteroidList.sort(Comparator.comparing(AsteroidResponse::getDiameter).reversed());
 
             // Top 3
-            asteroidList = asteroidList.subList(0, 3);
+            asteroidList = asteroidList.size() > 3 ? asteroidList.subList(0, 3) : asteroidList;
         }
 
         return asteroidList;

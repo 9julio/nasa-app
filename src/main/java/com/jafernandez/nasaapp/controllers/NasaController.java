@@ -1,8 +1,8 @@
-package com.example.nasaapp.controllers;
+package com.jafernandez.nasaapp.controllers;
 
-import com.example.nasaapp.models.responses.AsteroidResponse;
-import com.example.nasaapp.models.responses.ErrorResponse;
-import com.example.nasaapp.services.NasaService;
+import com.jafernandez.nasaapp.models.responses.AsteroidResponse;
+import com.jafernandez.nasaapp.services.NasaService;
+import com.jafernandez.nasaapp.models.responses.ErrorResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
